@@ -17,9 +17,13 @@ import {
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 
-// 
+import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
+import { useState } from 'react';
 
-const Tab2: React.FC = () => {
+export default function Tab2(){
+
+  const { photos, takePhoto } = usePhotoGallery()
+
   return (
     <IonPage>
       <IonHeader>
@@ -28,8 +32,17 @@ const Tab2: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonGrid>
+          <IonRow>
+            {photos.map((photo, idx) => (
+              <IonCol size="6" key={idx}>
+                <IonImg src={photo.webviewPath}/>
+              </IonCol>
+            ))}
+          </IonRow>
+        </IonGrid>
         <IonFab vertical='bottom' horizontal='center' slot="fixed">
-            <IonFabButton onClick={() => {}}>
+            <IonFabButton onClick={() => {takePhoto()}}>
               <IonIcon icon={camera}></IonIcon>
             </IonFabButton>
         </IonFab>
@@ -37,5 +50,3 @@ const Tab2: React.FC = () => {
     </IonPage>
   );
 };
-
-export default Tab2;
